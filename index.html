@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="./cashier2_118071.ico" type="image/x-icon">
+    <title>Cash Register</title>
+</head>
+<body class="container-fluid main-container">
+    <header>
+        <h1 class="text-primary">Cash Register</h1>
+    </header>
+    <main class="text-center">
+        <div class="main-container inner-main-container">
+            <label for="cash"><span class="fs-3">Input here the amount received</span></label><br>
+            <input type="number" id="cash" class="form-control">
+            <div class="fs-5" id="change-due"></div>
+            <button class="btn btn-primary" id="purchase-btn">Purchase</button>
+            <h4 id="status">Status: OPEN</h4>
+            <div class="row">
+                <!-- Cash-in-drawer Column -->
+                <div class="col-md-6">
+                    <span class="text-center"><h3>Cash-in-drawer</h3></span>
+                    <div id="cid"></div>
+                </div>
+                <!-- Cash-Out Column -->
+                <div class="col-md-6">
+                    <div id="cod">
+                        <h4 id="cod-header">Cash Out</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024, Marcelo Ruediger. All rights reserved.</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
