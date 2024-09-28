@@ -50,7 +50,7 @@ const convertMap = [
 const breakChange = () => { 
     let change = changeDue(cash, price);
     let subtrahends = [];
-    const tempCid = cid.map(([denomination, amount]) => [denomination, amount]); // Copy of cid
+    const tempCid = cid.map(([denomination, amount]) => [denomination, amount]); 
     
     convertMap.forEach(money => {
         let denomAmount = tempCid.find(([denom]) => denom === money.string)[1];
@@ -64,9 +64,9 @@ const breakChange = () => {
     }); 
     
     if (change > 0) {
-        cidStatusDom = "Status: INSUFFICIENT_FUNDS";
+        cidStatus = "Status: INSUFFICIENT_FUNDS";
         alert("Status: INSUFFICIENT_FUNDS");
-        return []; // Return an empty array to indicate failure
+        return []; 
     }
     
     return subtrahends;   
@@ -97,14 +97,11 @@ const updateCid = () => {
 
 const displayCid = () => {
     const updatedCid = updateCid();
-    cidContainer.innerHTML = '';  
+    cidContainer.innerHTML = '';
     updatedCid.forEach(array => {      
         cidContainer.innerHTML += `${array[0]} : ${array[1].toFixed(2)}<br>`;         
     });
     };
-
-displayCid();
-
 
 const handlePurchase = () => {
     console.log("Button clicked or Enter pressed!");
@@ -152,15 +149,16 @@ const handlePurchase = () => {
         displayCid();
         cash.value = "";
     }
-    // Your button click logic here
 }
 
-// Add click event listener
-purchaseBtn.addEventListener("click", handlePurchase());
+displayCid();
 
-// Add keydown event listener for the Enter key
+purchaseBtn.addEventListener("click", handlePurchase);
+
 document.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
-        handlePurchase();  // Trigger the same function
+        handlePurchase();
     }
 });
+
+
