@@ -62,7 +62,7 @@ const breakChange = (change) => {
     });
 
     if (change > 0) {
-        return { status: "INSUFFICIENT_FUNDS", change: [] }; // Return insufficient funds if exact change cannot be made
+        return { status: "INSUFFICIENT_FUNDS", change: [] }; 
     }
     
     return { status: "OPEN", change: subtrahends };
@@ -91,7 +91,7 @@ const purchaseBtnClick = () => {
     if (cashFixed === price) {
         changeDueContainer.innerText = "No change due - customer paid with exact cash";
     } else if (change === totalCashInDrawer) {
-        // Drawer should close and return all available cash
+      
         changeDueContainer.innerHTML = "Status: CLOSED";
 
         let changeDisplay = "";
@@ -102,7 +102,7 @@ const purchaseBtnClick = () => {
         });
 
         changeDueContainer.innerHTML += changeDisplay;
-        cid.forEach(denom => denom[1] = 0);  // Empty the drawer as it is closed
+        cid.forEach(denom => denom[1] = 0);  
     } else {
         const result = breakChange(change);
 

@@ -48,14 +48,14 @@ const convertMap = [
 ];
 
 const breakChange = () => { 
+    let cidStatus = "Status: OPEN"
     let change = changeDue(cash, price);
     let subtrahends = [];
     const tempCid = cid.map(([denomination, amount]) => [denomination, amount]); 
     
     convertMap.forEach(money => {
         let denomAmount = tempCid.find(([denom]) => denom === money.string)[1];
-        
-        
+
         while (change >= money.value && denomAmount > 0) {
             subtrahends.push({key: money.string, value: money.value});
             change = parseFloat((change -= money.value).toFixed(2));
@@ -64,7 +64,6 @@ const breakChange = () => {
     }); 
     
     if (change > 0) {
-        cidStatus = "Status: INSUFFICIENT_FUNDS";
         alert("Status: INSUFFICIENT_FUNDS");
         return []; 
     }
@@ -76,11 +75,11 @@ const updateCid = () => {
     const subtrahends = breakChange();
     let cidStatus = "Status: OPEN";
 
-    if (subtrahends.length === 0) {
-        cidStatus = "Status: INSUFFICIENT_FUNDS";
-        cidStatusDom.innerText = cidStatus;
-        return cid; 
-    }
+    // if (subtrahends.length === 0) {
+    //     cidStatus = "Status: INSUFFICIENT_FUNDS";
+    //     cidStatusDom.innerText = cidStatus;
+    //     return cid; 
+    // }
 
     subtrahends.forEach(subtrahend => {
         const moneyDrawer = cid.find(money => money[0] === subtrahend.key);
