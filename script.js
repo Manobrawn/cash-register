@@ -79,7 +79,7 @@ const updateCid = () => {
     if (subtrahends.length === 0) {
         cidStatus = "Status: INSUFFICIENT_FUNDS";
         cidStatusDom.innerText = cidStatus;
-        return cid; // Stop updating cid
+        return cid; 
     }
 
     subtrahends.forEach(subtrahend => {
