@@ -3,10 +3,8 @@ const purchaseBtn = document.getElementById("purchase-btn");
 const changeDueContainer = document.getElementById("change-due");
 const cidContainer = document.getElementById("cid");
 const codContainer = document.getElementById("cod");
-const codHeader = document.getElementById("cod-header");
-const cidStatusDom = document.getElementById("status");
+const priceInput = document.getElementById("price-input"); 
 
-let price = 5.5;
 let cid = [
   ['PENNY', 1.01],
   ['NICKEL', 2.05],
@@ -21,7 +19,7 @@ let cid = [
 
 const isCashEnough = () => {
     const cashFixed = cash.value; 
-    const priceFixed = price;
+    const priceFixed = priceInput.value;
     if (Number(cashFixed) === Number(priceFixed)) {
         alert("No change due - customer paid with exact cash");
         return true; 
@@ -48,11 +46,10 @@ const convertMap = [
 ];
 
 const breakChange = () => { 
-    let cidStatus = "Status: OPEN"
-    let change = changeDue(cash, price);
+    let change = changeDue(cash, priceInput.value);
     let subtrahends = [];
     const tempCid = cid.map(([denomination, amount]) => [denomination, amount]); 
-    
+
     convertMap.forEach(money => {
         let denomAmount = tempCid.find(([denom]) => denom === money.string)[1];
 
@@ -62,35 +59,26 @@ const breakChange = () => {
             denomAmount = parseFloat((denomAmount -= money.value).toFixed(2));
         }
     }); 
-    
+
     if (change > 0) {
         alert("Status: INSUFFICIENT_FUNDS");
         return []; 
     }
-    
+
     return subtrahends;   
 };
 
 const updateCid = () => {
     const subtrahends = breakChange();
-    let cidStatus = "Status: OPEN";
-
-    // if (subtrahends.length === 0) {
-    //     cidStatus = "Status: INSUFFICIENT_FUNDS";
-    //     cidStatusDom.innerText = cidStatus;
-    //     return cid; 
-    // }
 
     subtrahends.forEach(subtrahend => {
         const moneyDrawer = cid.find(money => money[0] === subtrahend.key);
 
         if (moneyDrawer && moneyDrawer[1] >= subtrahend.value) {
             moneyDrawer[1] = parseFloat((moneyDrawer[1] - subtrahend.value).toFixed(2));
-            cidStatus = "Status: OPEN";
         }
     });
-    
-    cidStatusDom.innerText = cidStatus;
+
     return cid;
 };
 
@@ -100,16 +88,15 @@ const displayCid = () => {
     updatedCid.forEach(array => {      
         cidContainer.innerHTML += `${array[0]} : ${array[1].toFixed(2)}<br>`;         
     });
-    };
+};
 
 const handlePurchase = () => {
-    console.log("Button clicked or Enter pressed!");
+    const price = Number(priceInput.value); 
     changeDueContainer.innerHTML = "";
-    codContainer.innerHTML = "";
     cidContainer.innerHTML = "";
 
     if (isCashEnough()) {
-        const change = changeDue(cash, price);
+        const change = changeDue(cash, price).toFixed(2);
         const givenCash = parseFloat(cash.value).toFixed(2);
         const subtrahends = breakChange();
         const repeatedSubtrahends = {};
@@ -121,8 +108,6 @@ const handlePurchase = () => {
                 repeatedSubtrahends[subtrahend.key] = subtrahend.value;
             }
         });
-
-        console.log(repeatedSubtrahends);
 
         changeDueContainer.innerHTML = `
         Cash: <span class="positive">$ ${givenCash}</span><br>
@@ -136,7 +121,7 @@ const handlePurchase = () => {
             codContainer.innerHTML += `
             <p class="text-center fs-6">${key}<br><span class="negative">- ${value.toFixed(2)}</span></p>`;
         }
-        
+
         displayCid();
         cash.value = "";
         
@@ -159,5 +144,3 @@ document.addEventListener("keydown", (event) => {
         handlePurchase();
     }
 });
-
-

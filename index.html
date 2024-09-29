@@ -14,21 +14,25 @@
     </header>
     <main class="text-center">
         <div class="main-container inner-main-container">
-            <label for="cash"><span class="fs-3">Input here the amount received</span></label><br>
-            <input type="number" id="cash" class="form-control">
+            <label for="cash"><span class="fs-4">Input bellow the amount received:</span></label><br>
+            <input type="number" id="cash" class="form-control" placeholder="$ 0.00">
+            <label for="price-input" class="fs-5">Set price: </label>
+            <span class="d-flex justify-content-center">
+                <input class="price-input form-control" type="number" id="price-input" placeholder="$ 0.00"> 
+            </span>   
             <div class="fs-5" id="change-due"></div>
             <button class="btn btn-primary" id="purchase-btn">Purchase</button>
-            <h4 id="status">Status: OPEN</h4>
             <div class="row">
                 <!-- Cash-in-drawer Column -->
                 <div class="col-md-6">
-                    <span class="text-center"><h3>Cash-in-drawer</h3></span>
+                    <span class="text-center"><h2>CID</h2></span>
+                    <p class="text-center">(Cash-In-Drawer)</p>
                     <div id="cid"></div>
                 </div>
                 <!-- Cash-Out Column -->
                 <div class="col-md-6">
                     <div id="cod">
-                        <h4 id="cod-header">Cash Out</h4>
+                        <h2 id="cod-header">Cash Out</h2>
                     </div>
                 </div>
             </div>
