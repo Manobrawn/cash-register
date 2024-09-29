@@ -4,6 +4,7 @@ const changeDueContainer = document.getElementById("change-due");
 const cidContainer = document.getElementById("cid");
 const codContainer = document.getElementById("cod");
 const priceInput = document.getElementById("price-input"); 
+const statusMessage = document.getElementById("statusMessage"); 
 
 let cid = [
   ['PENNY', 1.01],
@@ -27,6 +28,7 @@ const isCashEnough = () => {
         return true;
     } else {
         alert("Customer does not have enough money to purchase the item");
+        statusMessage.innerHTML = `<span class="negative">Status: INSUFFICIENT_FUNDS</span>`;
         return false;
     }
 };
@@ -62,15 +64,14 @@ const breakChange = () => {
 
     if (change > 0) {
         alert("Status: INSUFFICIENT_FUNDS");
+        statusMessage.innerHTML = `<span class="negative">Status: INSUFFICIENT_FUNDS</span>`; 
         return []; 
     }
 
     return subtrahends;   
 };
 
-const updateCid = () => {
-    const subtrahends = breakChange();
-
+const updateCid = (subtrahends) => {
     subtrahends.forEach(subtrahend => {
         const moneyDrawer = cid.find(money => money[0] === subtrahend.key);
 
@@ -83,9 +84,8 @@ const updateCid = () => {
 };
 
 const displayCid = () => {
-    const updatedCid = updateCid();
     cidContainer.innerHTML = '';
-    updatedCid.forEach(array => {      
+    cid.forEach(array => {      
         cidContainer.innerHTML += `${array[0]} : ${array[1].toFixed(2)}<br>`;         
     });
 };
@@ -93,12 +93,22 @@ const displayCid = () => {
 const handlePurchase = () => {
     const price = Number(priceInput.value); 
     changeDueContainer.innerHTML = "";
-    cidContainer.innerHTML = "";
+    
+    if (price <= 0) { 
+        alert("Please set the price!"); 
+        return;
+    }
 
     if (isCashEnough()) {
         const change = changeDue(cash, price).toFixed(2);
         const givenCash = parseFloat(cash.value).toFixed(2);
+
         const subtrahends = breakChange();
+
+        if (subtrahends.length === 0) {
+            return; 
+        }
+
         const repeatedSubtrahends = {};
 
         subtrahends.map(subtrahend => {
@@ -122,7 +132,10 @@ const handlePurchase = () => {
             <p class="text-center fs-6">${key}<br><span class="negative">- ${value.toFixed(2)}</span></p>`;
         }
 
+        updateCid(subtrahends);
+
         displayCid();
+        statusMessage.innerHTML = `<span class="positive">Status: OPEN</span>`;
         cash.value = "";
         
         /*-------------------- jQuery styling------------------------------*/
