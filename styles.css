@@ -3,11 +3,6 @@
     src: url(./Roboto/Roboto-Regular.ttf);
 }
 
-@font-face {
-    font-family: "roboto-bold";
-    src: url(./Roboto/Roboto-Bold.ttf);
-}
-
 #cid {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -38,6 +33,15 @@
 }
 
 #cash {
-    width: 200px;
-    
+    width: 200px; 
+    margin-top: -1rem;
+}
+
+.main-container h2 {
+    font-size: 1.5rem;
+}
+
+.price-input {
+    width: 50%;
+    margin-top: -0.5rem;
 }
